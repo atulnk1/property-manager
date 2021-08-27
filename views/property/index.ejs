@@ -94,7 +94,7 @@
         </div>
       </form>
     </div>
-  </div><!-- End Property Search Section -->>
+  </div><!-- End Property Search Section -->
 
   <!-- ======= Header/Navbar ======= -->
   <nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
@@ -194,21 +194,21 @@
           <% for(let property of properties) { %>
           <div class="col-md-4">
             <div class="card-box-a card-shadow">
-              <div class="img-box-a">
+              <a href="/property/<%= property.id %>"><div class="img-box-a"></a>
                 <img src="<%= property.image[0] %>" alt="" class="img-a img-fluid">
               </div>
               <div class="card-overlay">
                 <div class="card-overlay-a-content">
                   <div class="card-header-a">
                     <h2 class="card-title-a">
-                      <a href="#"><%= property.name %></a>
+                      <a href="/property/<%= property.id %>"><%= property.name %></a>
                     </h2>
                   </div>
                   <div class="card-body-a">
                     <div class="price-box d-flex">
                       <span class="price-a"><%= property.status %></span>
                     </div>
-                    <a href="property-single.html" class="link-a">Click here to view
+                    <a href="/property/<%= property.id %>" class="link-a">Click here to view
                       <span class="bi bi-chevron-right"></span>
                     </a>
                   </div>
