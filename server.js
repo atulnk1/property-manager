@@ -5,6 +5,10 @@ const session = require("express-session");
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 
+const landingPageController = require("./controllers/landingPageController");
+const propertyController = require("./controllers/propertyController");
+const testingController = require("./controllers/testingController");
+
 
 // Setting up Database connection
 const mongoURI = process.env.MONGO_URI;
@@ -26,10 +30,14 @@ app.use(methodOverride("_method"));
 
 
 // Linking to the controllers
+app.use(landingPageController)
+app.use("/property", propertyController);
+app.use("/testing", testingController);
 
-
-
-
+app.use("*", (req, res) => {
+  res.status(404);
+  res.send("Page not found");
+});
 
 // Listening on port number and ending the process
 const server = app.listen(process.env.PORT);
