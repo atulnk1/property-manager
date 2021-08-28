@@ -43,6 +43,10 @@ controller.get("/:id", async (req, res) => {
 });
 
 controller.post("/", async (req, res) => {
+    const imageList = req.body.image.split(',')
+    const newHistoricalValue = req.body.historicalValue.split(',');
+    const newHistoricalRentalAmount = req.body.historicalRentalAmount.split(',');
+
     try {
         inputs = {
             name: req.body.name,
@@ -50,14 +54,14 @@ controller.post("/", async (req, res) => {
             street: req.body.street,
             postalCode: req.body.postalCode,
             district: req.body.district,
-            image: req.body.image,
+            image: imageList,
             googleMapLink: req.body.googleMapLink,
             propertyType: req.body.propertyType,
             purchaseValue: req.body.purchaseValue, // Amount user bought it for
             currentValue: req.body.currentValue, // Current price for property
-            historicalValue: req.body.historicalValue,
+            historicalValue: newHistoricalValue,
             rentalAmount: req.body.rentalAmount,
-            historicalRentalAmount: req.body.historicalRentalAmount,
+            historicalRentalAmount: newHistoricalRentalAmount,
             status: req.body.status,
             installmentAmount: req.body.installmentAmount,
             loanLeft: req.body.loanLeft
@@ -68,6 +72,21 @@ controller.post("/", async (req, res) => {
 
         res.redirect("/property")
 
+    } catch (e) {
+        res.status(400).send({
+            name: e.name,
+            message: e.message
+        })
+    } 
+});
+
+controller.delete('/:id', async (req, res) => {
+    try {
+        await propertyModel.deleteOne({
+            _id: req.params.id
+        });   
+
+        res.redirect("/property");
     } catch (e) {
         res.status(400).send({
             name: e.name,
