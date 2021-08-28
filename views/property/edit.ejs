@@ -8,8 +8,8 @@
         <div class="row">
           <div class="col-md-12 col-lg-8">
             <div class="title-single-box">
-              <h1 class="title-single">Add a new property</h1>
-              <span class="color-text-a">In this section, you can enter details on the new property that you want to track on the app.</span>
+              <h1 class="title-single">Edit property</h1>
+              <span class="color-text-a">In this section, you can modify your property information.</span>
             </div>
           </div>
           <div class="col-md-12 col-lg-4">
@@ -18,7 +18,7 @@
                 <li class="breadcrumb-item">
                   <a href="/">Home</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">New Property</li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Property</li>
               </ol>
             </nav>
           </div>
@@ -33,114 +33,114 @@
           <div class="col-sm-12 section-t2">
             <div class="row">
               <div class="col-md-12">
-                <form method="POST" action="/property">
+                <form method="POST" action="/property/<%= property.id %>?_method=PUT">
                   <div class="row">
                     <div class="col-md-12 mb-3">
                       <div class="form-group">
                         <label for="name" class="form-label">Property Name:</label>
-                        <input type="text" name="name" class="form-control form-control-a" placeholder="e.g. The Glades or Block 123" required>
+                        <input type="text" name="name" class="form-control form-control-a" value="<%= property.name %>" required>
                       </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                          <label for="unit" class="form-label">Unit No:</label>
-                         <input type="text" name="unit" class="form-control form-control-a" placeholder="e.g. 12-34" required>
+                         <input type="text" name="unit" class="form-control form-control-a" value="<%= property.unit %>" required>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                          <label for="street" class="form-label">Street:</label>
-                         <input type="text" name="street" class="form-control form-control-a" placeholder="e.g. 123 Queesway Road" required>
+                         <input type="text" name="street" class="form-control form-control-a" value="<%= property.street %>" required>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                          <label for="postalCode" class="form-label">Postal Code:</label>
-                         <input type="number" name="postalCode" class="form-control form-control-a" placeholder="e.g. 012313" minlength="6" maxlength="6" required>
+                         <input type="number" name="postalCode" class="form-control form-control-a" value="<%= property.postalCode %>" minlength="6" maxlength="6" required>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                          <label for="district" class="form-label">District:</label>
-                         <input type="number" name="district" class="form-control form-control-a" placeholder="e.g. 1" min="1" max="28">
+                         <input type="number" name="district" class="form-control form-control-a" value="<%= property.district %>" min="1" max="28">
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
                          <label for="image" class="form-label">Image (Enter multiple URLs, you can upload your image <a class="link-icon" href="https://imgur.com/upload" target="_blank">here</a> and get the URL):</label>
-                         <input type="url" name="image" class="form-control form-control-a" placeholder="i.imgur.com/a/123.jpeg, i.imgur.com/a/456.jpeg">
+                         <input type="url" name="image" class="form-control form-control-a" value="<%= property.image %>">
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
                          <label for="googleMapLink" class="form-label">Google Map Link (Enter URL):</label>
-                         <input type="url" name="googleMapLink" class="form-control form-control-a" placeholder="">
+                         <input type="url" name="googleMapLink" class="form-control form-control-a" value="<%= property.googleMapLink %>">
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
                          <label for="propertyType" class="form-label">Property Type (Select One):</label>
                          <select class="form-control form-control-a" name="propertyType" id="propertyType" required>
-                            <option>HDB</option>
-                            <option>Condo</option>
-                            <option>Landed</option>
+                            <option <%= property.propertyType === 'HDB' ? 'selected' : '' %>>HDB</option>
+                            <option <%= property.propertyType === 'Condo' ? 'selected' : '' %>>Condo</option>
+                            <option <%= property.propertyType === 'Landed' ? 'selected' : '' %>>Landed</option>
                           </select>
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
                          <label for="purchaseValue" class="form-label">Purchase Value:</label>
-                         <input type="number" name="purchaseValue" class="form-control form-control-a" placeholder="e.g. 1" min="0" max="1000000000" required>
+                         <input type="number" name="purchaseValue" class="form-control form-control-a" value="<%= property.purchaseValue %>" min="0" max="1000000000" required>
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
                          <label for="currentValue" class="form-label">Current Value:</label>
-                         <input type="number" name="currentValue" class="form-control form-control-a" placeholder="e.g. 1" min="0" max="1000000000" required>
+                         <input type="number" name="currentValue" class="form-control form-control-a" value="<%= property.currentValue %>" min="0" max="1000000000" required>
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
                          <label for="historicalValue" class="form-label">Historical Value (Comma separated values):</label>
-                         <input type="text" name="historicalValue" class="form-control form-control-a" placeholder="e.g. 2000, 3000, 4000">
+                         <input type="text" name="historicalValue" class="form-control form-control-a" value="<%= property.historicalValue %>">
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
                          <label for="rentalAmount" class="form-label">Rental Amount (Skip if property not on rent):</label>
-                         <input type="number" name="rentalAmount" class="form-control form-control-a" placeholder="e.g. 4000" min="0" max="1000000000">
+                         <input type="number" name="rentalAmount" class="form-control form-control-a" value="<%= property.rentalAmount %>" min="0" max="1000000000">
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
                          <label for="historicalRentalAmount" class="form-label">Historical Rental Amount (Skip if property not on rent, Comma separated values):</label>
-                         <input type="text" name="historicalRentalAmount" class="form-control form-control-a" placeholder="e.g. 2000, 3000, 4000">
+                         <input type="text" name="historicalRentalAmount" class="form-control form-control-a" value="<%= property.historicalRentalAmount %>">
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
                          <label for="status" class="form-label">Property Status (Select One):</label>
                          <select class="form-control" name="status" id="status" required>
-                            <option>Rented</option>
-                            <option>Occupied</option>
-                            <option>On Sale</option>
+                            <option <%= property.status === 'Rented' ? 'selected' : '' %>>Rented</option>
+                            <option <%= property.status === 'Occupied' ? 'selected' : '' %>>Occupied</option>
+                            <option <%= property.status === 'On Sale' ? 'selected' : '' %>>On Sale</option>
                           </select>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                          <label for="installmentAmount" class="form-label">Installment Amount (Skip if already fully paid for):</label>
-                         <input type="number" name="installmentAmount" class="form-control form-control-a" value="0">
+                         <input type="number" name="installmentAmount" class="form-control form-control-a" value="<%= property.installmentAmount %>">
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                          <label for="loanLeft" class="form-label">Loan Left (Skip if already fully paid for):</label>
-                         <input type="number" name="loanLeft" class="form-control form-control-a" value="0">
+                         <input type="number" name="loanLeft" class="form-control form-control-a" value="<%= property.loanLeft %>">
                         </div>
                     </div>
                     <div class="col-md-12 text-center">
-                      <button type="submit" class="btn btn-a">Add Property</button>
+                      <button type="submit" class="btn btn-a">Edit Property</button>
                     </div>
                   </div>
                 </form>

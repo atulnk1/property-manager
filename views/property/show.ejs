@@ -264,6 +264,9 @@
                         <% } %>
                        </div>
                       </form>
+                      <div class="text-center col-md-12 mt-3">
+                        <a href="<%= property.id %>/edit" class="btn btn-primary">Edit Property</a>
+                      </div>
                       <form method="POST" action="<%= property.id %>?_method=DELETE">
                         <div class="text-center col-md-12 mt-3">
                             <input type="submit" class="btn btn-danger" value="Remove Property" />
