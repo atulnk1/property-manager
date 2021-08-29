@@ -123,12 +123,12 @@
               <ul class="nav nav-pills-a nav-pills mb-3 section-t3" id="pills-tab" role="tablist">
                 <% if(property.historicalRentalAmount.length > 0) { %>
                 <li class="nav-item">
-                  <a class="nav-link" id="pills-rental-tab" data-bs-toggle="pill" href="#pills-rental" role="tab" aria-controls="pills-rental" aria-selected="true">Rental Chart</a>
+                  <a class="nav-link active" id="pills-rental-tab" data-bs-toggle="pill" href="#pills-rental" role="tab" aria-controls="pills-rental" aria-selected="true">Rental Chart</a>
                 </li>
                 <% } %>
                 <% if(property.historicalValue.length > 0) { %>
                 <li class="nav-item">
-                  <a class="nav-link" id="pills-value-tab" data-bs-toggle="pill" href="#pills-value" role="tab" aria-controls="pills-value" aria-selected="false">Historical Value Chart</a>
+                  <a class="nav-link <%= property.status !== 'Rented' ? 'active' : '' %>" id="pills-value-tab" data-bs-toggle="pill" href="#pills-value" role="tab" aria-controls="pills-value" aria-selected="false">Historical Value Chart</a>
                 </li>
                 <% } %>
                 <li class="nav-item">
@@ -170,7 +170,7 @@
                 </script>
                 <% } %>
                 <% if(property.historicalValue.length > 0) { %>
-                <div class="tab-pane fade show active" id="pills-value" role="tabpanel" aria-labelledby="pills-plans-tab">
+                <div class="tab-pane fade <%= property.status !== 'Rented' ? 'show active' : '' %>" id="pills-value" role="tabpanel" aria-labelledby="pills-plans-tab">
                   <canvas id="value-chart"></canvas>
                 </div>
                 <script>
