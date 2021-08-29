@@ -15,6 +15,8 @@ const mongoURI = process.env.MONGO_URI;
 const dbConnection = mongoose.connection;
 
 mongoose.connect(mongoURI, {useNewUrlParser: true, useUnifiedTopology: true});
+// Set this to prevent the deprecation warning found here: https://mongoosejs.com/docs/deprecations.html#findandmodify
+mongoose.set('useFindAndModify', false);
 
 dbConnection.on("connected", () => console.log("Database Connected Successfully"));
 dbConnection.on("error", (err) => console.log(`Got error! ${err.message}`));

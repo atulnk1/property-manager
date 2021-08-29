@@ -44,7 +44,6 @@ controller.get("/:id", async (req, res) => {
 });
 // ADD NEW PROPERTY ROUTE
 controller.post("/", async (req, res) => {
-    
 
     try {
         const imageList = req.body.image.split(',')
@@ -127,6 +126,96 @@ controller.put('/:id', async (req, res) => {
         }, inputs);
 
         res.redirect(`/property/${req.params.id}`)
+
+    } catch (e) {
+        res.status(400).send({
+            name: e.name,
+            message: e.message
+        })
+    }
+});
+
+// RENT ROUTE
+controller.patch('/:id/rent', async (req, res) => {
+    try {
+        const updateProperty = await propertyModel.findByIdAndUpdate(
+            req.params.id,
+            {
+                $push: { historicalRentalAmount: Number(req.body.rent) },
+                rentalAmount: Number(req.body.rent)
+            },
+            {
+                new: true
+            }
+        );
+        if(updateProperty) {
+            res.redirect(`/property/${req.params.id}`);
+        } else {
+            throw new Error('Unable to update currently. Please try again later.')
+        }
+
+    } catch (e) {
+        res.status(400).send({
+            name: e.name,
+            message: e.message
+        })
+    }
+});
+
+
+// INSTALLMENT ROUTE
+controller.patch('/:id/loan', async (req, res) => {
+    try {
+        const currProperty = await propertyModel.findById(req.params.id);
+
+        if(currProperty.loanLeft < 1) {
+            res.redirect(`/property/${req.params.id}`)
+        } else {
+            const loanPaid = - Number(req.body.installment)
+            const updateProperty = await propertyModel.findByIdAndUpdate(
+                req.params.id,
+                {
+                    $inc: {
+                        loanLeft: loanPaid
+                    },
+                    installmentAmount: req.body.installment
+                },
+                {
+                    new: true
+                }
+            );
+            if(updateProperty) {
+                res.redirect(`/property/${req.params.id}`);
+            } else {
+                throw new Error('Unable to update currently. Please try again later.')
+            }
+        }
+    } catch (e) {
+        res.status(400).send({
+            name: e.name,
+            message: e.message
+        })
+    }
+});
+
+// PROPERTY VALUE ROUTE
+controller.patch('/:id/value', async (req, res) => {
+    try {
+        const updateProperty = await propertyModel.findByIdAndUpdate(
+            req.params.id,
+            {
+                $push: { historicalValue: Number(req.body.value) },
+                currentValue: Number(req.body.value)
+            },
+            {
+                new: true
+            }
+        );
+        if(updateProperty) {
+            res.redirect(`/property/${req.params.id}`);
+        } else {
+            throw new Error('Unable to update currently. Please try again later.')
+        }
 
     } catch (e) {
         res.status(400).send({

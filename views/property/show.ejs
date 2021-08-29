@@ -117,28 +117,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- <div class="col-md-7 col-lg-7 section-md-t3">
-                  <div class="row section-t3">
-                    <div class="col-sm-12">
-                      <div class="title-box-d">
-                        <h3 class="title-d">Amenities</h3>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="amenities-list color-text-a">
-                    <ul class="list-a no-margin">
-                      <li>Balcony</li>
-                      <li>Outdoor Kitchen</li>
-                      <li>Cable Tv</li>
-                      <li>Deck</li>
-                      <li>Tennis Courts</li>
-                      <li>Internet</li>
-                      <li>Parking</li>
-                      <li>Sun Room</li>
-                      <li>Concrete Flooring</li>
-                    </ul>
-                  </div>
-                </div> -->
               </div>
             </div>
             <div class="col-md-10 offset-md-1">
@@ -180,7 +158,9 @@
                       labels: rentLabelValue,
                       datasets: [{
                         label: 'Rental',
-                        data: hisRentAmountArray
+                        data: hisRentAmountArray,
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
                       }]
                     }
                   })
@@ -190,7 +170,7 @@
                 </script>
                 <% } %>
                 <% if(property.historicalValue.length > 0) { %>
-                <div class="tab-pane fade" id="pills-value" role="tabpanel" aria-labelledby="pills-plans-tab">
+                <div class="tab-pane fade show active" id="pills-value" role="tabpanel" aria-labelledby="pills-plans-tab">
                   <canvas id="value-chart"></canvas>
                 </div>
                 <script>
@@ -211,7 +191,9 @@
                       labels: valueLabelValue,
                       datasets: [{
                         label: 'Historical Property Value',
-                        data: hisValueArray
+                        data: hisValueArray,
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
                       }]
                     }
                   })
@@ -236,12 +218,12 @@
               <div class="row justify-content-center">
                 <div class="col-md-12 col-md-12 ">
                   <div class="property-contact">
-                    <form class="form-a">
+                    <form class="form-a" method="POST" action="/property/<%= property.id %>/rent/?_method=PATCH">
                       <div class="row">
                         <% if(property.status === "Rented") { %>
                         <div class="col-md-6 mb-3">
                           <div class="form-group">
-                            <input type="text" class="form-control form-control-a" id="inputName" placeholder="Name *" required>
+                            <input type="text" class="form-control form-control-a" name="rent" id="rent" value="<%= property.rentalAmount %>" required>
                           </div>
                         </div>
                         <div class="col-md-6">
@@ -250,16 +232,30 @@
                         <% } %>
                       </div>
                     </form>
-                    <form class="form-a">
+                    <form class="form-a" method="POST" action="/property/<%= property.id %>/value/?_method=PATCH">
+                      <div class="row">
+                        <% if(property.historicalValue.length > 0) { %>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <input type="text" class="form-control form-control-a" name="value" id="value" value="<%= property.currentValue %>" required>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <button type="submit" class="btn btn-success">Update Value</button>
+                        </div>
+                        <% } %>
+                      </div>
+                    </form>
+                    <form class="form-a" method="POST" action="/property/<%= property.id %>/loan/?_method=PATCH">
                       <div class="row">
                         <% if(property.loanLeft > 0) { %>
                         <div class="col-md-6 mb-3">
                           <div class="form-group">
-                            <input type="email" class="form-control form-control-a" id="inputEmail1" placeholder="Email *">
+                            <input type="text" class="form-control form-control-a" name="installment" id="installment" value="<%= property.installmentAmount %>" required>
                           </div>
                         </div>
                         <div class="col-md-6">
-                          <button type="submit" class="btn btn-primary">Add Installment</button>
+                          <button type="submit" class="btn btn-primary">Pay Installment</button>
                         </div>
                         <% } %>
                        </div>
