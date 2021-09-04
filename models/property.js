@@ -18,7 +18,8 @@ const propertySchema = new Schema (
         historicalRentalAmount: [Number],
         status: { type: String, required: true },
         installmentAmount: Number,
-        loanLeft: Number
+        loanLeft: Number,
+        belongsTo: { type: String, required: true}
     }, 
     {
         timestamps: true

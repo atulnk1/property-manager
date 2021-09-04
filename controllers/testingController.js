@@ -22,7 +22,8 @@ controller.get("/seeds", async (req, res) => {
                 historicalRentalAmount: [4500, 5000, 5000, 5000, 5000],
                 status: "Rented",
                 installmentAmount: 4100,
-                loanLeft: 0
+                loanLeft: 0,
+                belongsTo: "atulnk1@gmail.com"
             },
             {
                 name: "Martin Mordern",
@@ -40,7 +41,8 @@ controller.get("/seeds", async (req, res) => {
                 historicalRentalAmount: [10000, 10000, 10000, 10000, 10000],
                 status: "Rented",
                 installmentAmount: 5000,
-                loanLeft: 1200000
+                loanLeft: 1200000,
+                belongsTo: "atulnk1@gmail.com"
             },
             {
                 name: "The Landmark",
@@ -58,7 +60,8 @@ controller.get("/seeds", async (req, res) => {
                 historicalRentalAmount: [],
                 status: "Occupied",
                 installmentAmount: 0,
-                loanLeft: 0
+                loanLeft: 0,
+                belongsTo: "atul@resdiary.com"
             },
         ]);
         res.send("Seed data added")

@@ -6,7 +6,8 @@ const controller = express.Router();
 // INDEX PAGE
 controller.get("/", authController.isLoggedIn, async (req, res) => {
     try {
-        const properties = await propertyModel.find({});
+        let userEmail = req.user.email;
+        const properties = await propertyModel.find({'belongsTo': userEmail});
 
         let totalPropertyValue = 0;
         let totalRentValue = 0;
@@ -80,7 +81,8 @@ controller.post("/", authController.isLoggedIn,  async (req, res) => {
             historicalRentalAmount: newHistoricalRentalAmount,
             status: req.body.status,
             installmentAmount: req.body.installmentAmount,
-            loanLeft: req.body.loanLeft
+            loanLeft: req.body.loanLeft,
+            belongsTo: req.user.email
         }
 
         console.log(inputs)
@@ -132,7 +134,8 @@ controller.put('/:id', authController.isLoggedIn, async (req, res) => {
             historicalRentalAmount: newHistoricalRentalAmount,
             status: req.body.status,
             installmentAmount: req.body.installmentAmount,
-            loanLeft: req.body.loanLeft
+            loanLeft: req.body.loanLeft,
+            belongsTo: req.user.email
         }
 
         console.log(inputs)
