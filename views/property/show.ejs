@@ -93,6 +93,10 @@
                             <strong>Property Type</strong>
                             <span><%= property.propertyType %></span>
                          </li>
+                         <li class="d-flex justify-content-between">
+                          <strong>Purchase Value</strong>
+                          <span>$<%= property.purchaseValue %></span>
+                      </li>
                         <li class="d-flex justify-content-between">
                             <strong>Current Value</strong>
                             <span>$<%= property.currentValue %></span>
@@ -121,7 +125,7 @@
             </div>
             <div class="col-md-10 offset-md-1">
               <ul class="nav nav-pills-a nav-pills mb-3 section-t3" id="pills-tab" role="tablist">
-                <% if(property.historicalRentalAmount.length > 0) { %>
+                <% if(property.historicalRentalAmount.length > 0 && property.status === 'Rented') { %>
                 <li class="nav-item">
                   <a class="nav-link active" id="pills-rental-tab" data-bs-toggle="pill" href="#pills-rental" role="tab" aria-controls="pills-rental" aria-selected="true">Rental Chart</a>
                 </li>
@@ -136,7 +140,7 @@
                 </li>
               </ul>
               <div class="tab-content" id="pills-tabContent">
-                <% if(property.historicalRentalAmount.length > 0) { %>
+                <% if(property.historicalRentalAmount.length > 0 && property.status === 'Rented') { %>
                 <div class="tab-pane fade show active" id="pills-rental" role="tabpanel" aria-labelledby="pills-video-tab">
                   <canvas id="rental-chart"></canvas>
                 </div>

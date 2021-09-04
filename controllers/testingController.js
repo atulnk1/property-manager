@@ -1,5 +1,6 @@
 const express = require("express");
 const propertyModel = require("../models/property");
+const authController = require("./authController")
 const controller = express.Router();
 
 controller.get("/seeds", async (req, res) => {

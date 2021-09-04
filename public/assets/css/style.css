@@ -140,6 +140,16 @@ a:hover {
 }
 
 /*------/ Nav Pills  /------*/
+.btn-google {
+  color: white;
+  background-color: #ea4335
+}
+
+.btn-facebook {
+  color: white;
+  background-color: #3b5998
+}
+
 .nav-pills-a {
   text-decoration: none;
 }
@@ -598,7 +608,7 @@ a:hover {
   align-items: center;
   justify-content: center;
   line-height: 0;
-  padding: 10px;
+  padding: 20px;
 }
 
 .navbar-toggle-box i {

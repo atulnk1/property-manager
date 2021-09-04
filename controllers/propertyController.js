@@ -1,13 +1,28 @@
 const express = require("express");
 const propertyModel = require("../models/property");
+const authController = require("./authController")
 const controller = express.Router();
 
 // INDEX PAGE
-controller.get("/", async (req, res) => {
+controller.get("/", authController.isLoggedIn, async (req, res) => {
     try {
         const properties = await propertyModel.find({});
+
+        let totalPropertyValue = 0;
+        let totalRentValue = 0;
+        let totalLoanValue = 0;
+
+        for(let property of properties){
+            totalPropertyValue += Number(property.currentValue);
+            totalRentValue += Number(property.rentalAmount);
+            totalLoanValue += Number(property.installmentAmount);
+        }
+        
         res.render("property/index.ejs", {
-            properties
+            properties,
+            totalPropertyValue,
+            totalRentValue,
+            totalLoanValue
         });  
     } catch (e) {
         res.status(400).send({
@@ -17,7 +32,7 @@ controller.get("/", async (req, res) => {
     }
 });
 // GET ADD NEW PROPERTY PAGE
-controller.get("/new", async (req, res) => {
+controller.get("/new", authController.isLoggedIn, async (req, res) => {
     try {
         res.render("property/new.ejs")
     } catch (e) {
@@ -28,7 +43,7 @@ controller.get("/new", async (req, res) => {
     }
 });
 // GET ONE PROPERTY ROUTE
-controller.get("/:id", async (req, res) => {
+controller.get("/:id", authController.isLoggedIn, async (req, res) => {
     try{
         const property = await propertyModel.findById(req.params.id)
         // console.log(property)
@@ -43,7 +58,7 @@ controller.get("/:id", async (req, res) => {
     }
 });
 // ADD NEW PROPERTY ROUTE
-controller.post("/", async (req, res) => {
+controller.post("/", authController.isLoggedIn,  async (req, res) => {
 
     try {
         const imageList = req.body.image.split(',')
@@ -82,7 +97,7 @@ controller.post("/", async (req, res) => {
 });
 
 // UPDATE ROUTES
-controller.get('/:id/edit', async (req, res) => {
+controller.get('/:id/edit', authController.isLoggedIn, async (req, res) => {
     try {
         const selectedProperty = await propertyModel.findById(req.params.id)
         res.render('property/edit.ejs', {
@@ -96,7 +111,7 @@ controller.get('/:id/edit', async (req, res) => {
     }
 });
 
-controller.put('/:id', async (req, res) => {
+controller.put('/:id', authController.isLoggedIn, async (req, res) => {
     try {
         const imageList = req.body.image.split(',')
         const newHistoricalValue = req.body.historicalValue.split(',');
@@ -136,7 +151,7 @@ controller.put('/:id', async (req, res) => {
 });
 
 // RENT ROUTE
-controller.patch('/:id/rent', async (req, res) => {
+controller.patch('/:id/rent', authController.isLoggedIn, async (req, res) => {
     try {
         const updateProperty = await propertyModel.findByIdAndUpdate(
             req.params.id,
@@ -164,7 +179,7 @@ controller.patch('/:id/rent', async (req, res) => {
 
 
 // INSTALLMENT ROUTE
-controller.patch('/:id/loan', async (req, res) => {
+controller.patch('/:id/loan', authController.isLoggedIn, async (req, res) => {
     try {
         const currProperty = await propertyModel.findById(req.params.id);
 
@@ -199,7 +214,7 @@ controller.patch('/:id/loan', async (req, res) => {
 });
 
 // PROPERTY VALUE ROUTE
-controller.patch('/:id/value', async (req, res) => {
+controller.patch('/:id/value', authController.isLoggedIn, async (req, res) => {
     try {
         const updateProperty = await propertyModel.findByIdAndUpdate(
             req.params.id,
@@ -226,7 +241,7 @@ controller.patch('/:id/value', async (req, res) => {
 });
 
 // DELETE ROUTE
-controller.delete('/:id', async (req, res) => {
+controller.delete('/:id', authController.isLoggedIn, async (req, res) => {
     try {
         await propertyModel.deleteOne({
             _id: req.params.id
