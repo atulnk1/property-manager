@@ -1014,7 +1014,7 @@ a:hover {
   }
 }
 
-.intro .intro-body .price-a {
+.intro .intro-body .price-a .price-b {
   color: #ffffff;
   padding: 1rem 1.5rem;
   border: 2px solid #2eca6a;
@@ -1214,14 +1214,18 @@ a:hover {
 
 @media (min-width: 768px) {
   .card-box-a .price-a,
-  .card-box-b .price-a {
+  .card-box-b .price-a,
+  .card-box-a .price-b,
+  .card-box-b .price-b {
     font-size: .9rem;
   }
 }
 
 @media (min-width: 992px) {
   .card-box-a .price-a,
-  .card-box-b .price-a {
+  .card-box-b .price-a,
+  .card-box-a .price-b,
+  .card-box-b .price-b {
     font-size: 1rem;
   }
 }
@@ -1351,6 +1355,16 @@ a:hover {
   text-transform: uppercase;
   letter-spacing: 0.030em;
 }
+
+.price-b {
+  color: #ffffff;
+  padding: .6rem .8rem;
+  border: 2px solid royalblue;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.030em;
+}
+
 
 .card-footer-a {
   width: 100%;

@@ -1,6 +1,7 @@
 const express = require("express");
 const propertyModel = require("../models/property");
-const authController = require("./authController")
+const authController = require("./authController");
+const numeral = require("numeral");
 const controller = express.Router();
 
 // INDEX PAGE
@@ -18,6 +19,11 @@ controller.get("/", authController.isLoggedIn, async (req, res) => {
             totalRentValue += Number(property.rentalAmount);
             totalLoanValue += Number(property.installmentAmount);
         }
+
+        totalPropertyValue = numeral(totalPropertyValue).format('0,0');
+        totalRentValue = numeral(totalRentValue).format('0,0');
+        totalRentValue = numeral(totalRentValue).format('0,0');
+
         
         res.render("property/index.ejs", {
             properties,
@@ -48,8 +54,20 @@ controller.get("/:id", authController.isLoggedIn, async (req, res) => {
     try{
         const property = await propertyModel.findById(req.params.id)
         // console.log(property)
+        const formatPurchaseValue = numeral(property.purchaseValue).format('0,0');
+        const formatCurrentValue = numeral(property.currentValue).format('0,0');
+        const formatRentalAmount = numeral(property.rentalAmount).format('0,0');
+        const formatInstallmentAmount = numeral(property.installmentAmount).format('0,0');
+        const formatLoanLeft = numeral(property.loanLeft).format('0,0');
+
+
         res.render("property/show.ejs", {
-            property
+            property,
+            formatPurchaseValue,
+            formatCurrentValue,
+            formatRentalAmount,
+            formatInstallmentAmount,
+            formatLoanLeft
         });
     } catch (e) {
         res.status(400).send({

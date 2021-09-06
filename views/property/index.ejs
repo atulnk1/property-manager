@@ -67,7 +67,11 @@
                   </div>
                   <div class="card-body-a">
                     <div class="price-box d-flex">
-                      <span class="price-a"><%= property.status %></span>
+                      <% if(property.status === "Rented") { %>
+                        <span class="price-a"><%= property.status %></span>
+                      <% } else if(property.status === "Occupied") { %>
+                        <span class="price-b"><%= property.status %></span>
+                      <% } %>
                     </div>
                     <a href="/property/<%= property.id %>" class="link-a">Click here to view
                       <span class="bi bi-chevron-right"></span>

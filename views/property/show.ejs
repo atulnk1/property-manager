@@ -95,15 +95,15 @@
                          </li>
                          <li class="d-flex justify-content-between">
                           <strong>Purchase Value</strong>
-                          <span>$<%= property.purchaseValue %></span>
+                          <span>$<%= formatPurchaseValue %></span>
                       </li>
                         <li class="d-flex justify-content-between">
                             <strong>Current Value</strong>
-                            <span>$<%= property.currentValue %></span>
+                            <span>$<%= formatCurrentValue %></span>
                         </li>
                         <li class="d-flex justify-content-between">
                             <strong>Rental Amount</strong>
-                            <span>$<%= property.rentalAmount %></span>
+                            <span>$<%= formatRentalAmount %></span>
                         </li>
                         <li class="d-flex justify-content-between">
                             <strong>Status</strong>
@@ -111,11 +111,11 @@
                         </li>
                         <li class="d-flex justify-content-between">
                             <strong>Installment Amount</strong>
-                            <span>$<%= property.installmentAmount %></span>
+                            <span>$<%= formatInstallmentAmount %></span>
                         </li>
                         <li class="d-flex justify-content-between">
                             <strong>Loan pending</strong>
-                            <span>$<%= property.loanLeft %></span>
+                            <span>$<%= formatLoanLeft %></span>
                         </li>
                       </ul>
                     </div>
