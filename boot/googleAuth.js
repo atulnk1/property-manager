@@ -6,12 +6,14 @@ const User = require('../models/user');
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.AUTH_GOOGLE_CALLBACK
+    callbackURL: process.env.AUTH_GOOGLE_CALLBACK,
+
   }, async (accessToken, refreshToken, profile, cb) => {
     // User.findOrCreate({ googleId: profile.id }, (err, user) => {
     //   return cb(err, user);
     // });
-    
+    // console.log(accessToken)
+    // console.log(profile)
     const newUser = {
         email: profile.emails[0].value,
         name: profile.name.givenName,
@@ -35,6 +37,7 @@ passport.use(new GoogleStrategy({
         }
 
     } catch (e) {
+        
         res.status(400).send({
             name: e.name,
             message: e.message
@@ -56,5 +59,7 @@ passport.deserializeUser( (id, cb) => {
         .then((user) => {
             cb(null, user);
         })
-        .catch(err => cb(err))
+        .catch(err => {
+            return cb(err)
+        }) 
 });

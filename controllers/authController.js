@@ -29,7 +29,7 @@ controller.get('/auth/google',
   passport.authenticate('google', { scope: ['email', 'profile'] }));
 
 controller.get('/google/callback', 
-  passport.authenticate('google', { successRedirect: '/property', failureRedirect: '/auth/google/failure' }));
+  passport.authenticate('google', { scope: ['email', 'profile'], successRedirect: '/property', failureRedirect: '/auth/google/failure' }));
 
 controller.get('/auth/google/failure', (req, res) => {
     res.send('Failed to authenticate with Google');

@@ -103,7 +103,7 @@ controller.post("/", authController.isLoggedIn,  async (req, res) => {
             belongsTo: req.user.email
         }
 
-        console.log(inputs)
+        // console.log(inputs)
         await propertyModel.create(inputs)
 
         res.redirect("/property")
@@ -156,7 +156,7 @@ controller.put('/:id', authController.isLoggedIn, async (req, res) => {
             belongsTo: req.user.email
         }
 
-        console.log(inputs)
+        // console.log(inputs)
         await propertyModel.updateOne({
             _id: req.params.id,
         }, inputs);
