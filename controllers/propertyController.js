@@ -52,23 +52,28 @@ controller.get("/new", authController.isLoggedIn, async (req, res) => {
 // GET ONE PROPERTY ROUTE
 controller.get("/:id", authController.isLoggedIn, async (req, res) => {
     try{
+        let userEmail = req.user.email;
         const property = await propertyModel.findById(req.params.id)
-        // console.log(property)
-        const formatPurchaseValue = numeral(property.purchaseValue).format('0,0');
-        const formatCurrentValue = numeral(property.currentValue).format('0,0');
-        const formatRentalAmount = numeral(property.rentalAmount).format('0,0');
-        const formatInstallmentAmount = numeral(property.installmentAmount).format('0,0');
-        const formatLoanLeft = numeral(property.loanLeft).format('0,0');
+        if(property.belongsTo === userEmail) {
+            // console.log(property)
+            const formatPurchaseValue = numeral(property.purchaseValue).format('0,0');
+            const formatCurrentValue = numeral(property.currentValue).format('0,0');
+            const formatRentalAmount = numeral(property.rentalAmount).format('0,0');
+            const formatInstallmentAmount = numeral(property.installmentAmount).format('0,0');
+            const formatLoanLeft = numeral(property.loanLeft).format('0,0');
 
 
-        res.render("property/show.ejs", {
-            property,
-            formatPurchaseValue,
-            formatCurrentValue,
-            formatRentalAmount,
-            formatInstallmentAmount,
-            formatLoanLeft
-        });
+            res.render("property/show.ejs", {
+                property,
+                formatPurchaseValue,
+                formatCurrentValue,
+                formatRentalAmount,
+                formatInstallmentAmount,
+                formatLoanLeft
+            });
+        } else {
+            res.send("Unautorized")
+        }
     } catch (e) {
         res.status(400).send({
             name: e.name,
@@ -119,10 +124,15 @@ controller.post("/", authController.isLoggedIn,  async (req, res) => {
 // UPDATE ROUTES
 controller.get('/:id/edit', authController.isLoggedIn, async (req, res) => {
     try {
-        const selectedProperty = await propertyModel.findById(req.params.id)
-        res.render('property/edit.ejs', {
-            property: selectedProperty
-        })
+        let userEmail = req.user.email;
+        const selectedProperty = await propertyModel.findById(req.params.id);
+        if(selectedProperty.belongsTo === userEmail) {
+            res.render('property/edit.ejs', {
+                property: selectedProperty
+            })
+        } else {
+            res.send("Unautorized")
+        }
     } catch (e) {
         res.status(400).send({
             name: e.name,
