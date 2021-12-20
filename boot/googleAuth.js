@@ -36,12 +36,9 @@ passport.use(new GoogleStrategy({
             return cb(null, user)
         }
 
-    } catch (e) {
+    } catch (err) {
         
-        res.status(400).send({
-            name: e.name,
-            message: e.message
-        })
+        return cb(err)
     }
     // console.log(profile)
     // console.log(profile.emails[0].value)
